@@ -1,10 +1,10 @@
 {
-  "name": "esp32_https_server_compat",
+  "name": "esp32_idf5_https_server_compat",
   "authors": [
     {
       "name": "Frank Hessel",
       "email": "frank@fhessel.de",
-      "maintainer": true
+      "maintainer": false
     },
     {
       "name": "Jack Jansen",
@@ -13,20 +13,20 @@
     }
   ],
   "keywords": "communication, esp32, http, https, server, ssl, tls, webserver, websockets",
-  "description": "An Arduino library for an alternative ESP32 HTTP/HTTPS web server implementation. This library is a wrapper around esp32_https_server that provides the same API as the default Webserver library.",
+  "description": "An Arduino library for an alternative ESP32 HTTP/HTTPS web server implementation. This library is a wrapper around esp32_https_server that provides the same API as the default Webserver library. Forked from fhessel/esp32_https_server_compat to allow compatibility with ESP-IDF 5.0",
   "repository":
   {
     "type": "git",
-    "url": "https://github.com/fhessel/esp32_https_server_compat.git"
+    "url": "https://github.com/jackjansen/esp32_idf5_https_server_compat.git"
   },
   "dependencies": [
     {
-      "name": "esp32_https_server",
-      "version": "https://github.com/jackjansen/esp32_https_server#for-iotsa"
+      "name": "esp32_idf5_https_server",
+      "version": "https://github.com/jackjansen/esp32_idf5_https_server"
     }
   ],
   "license": "LGPL-2.1-only",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "frameworks": "arduino",
   "platforms": ["espressif32"]
 }

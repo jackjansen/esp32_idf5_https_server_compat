@@ -1,4 +1,15 @@
-# esp32\_https\_server\_compat
+# esp32\_idf5\_https\_server\_compat
+
+This repository is a fork of `fhessel/esp32_https_server_compat`. The only reason for forking is that the original repository is currently not maintained, and it has become seriously broken for newer boards, and newer releases of ESP-IDF.
+
+If _fhessel_ returns to maintaining his repository this fork will most likely go away (after a warning period).
+
+In the mean time: follow the instructions below, but
+
+- replace every mention of `esp32_https_server_compat` with `esp32_idf5_https_server_compat`
+- replace every mention of `esp32_https_server` with `esp32_idf5_https_server`
+
+## Original esp32\_https\_server\_compat readme
 
 This library is a wrapper around the [TLS-enabled web server for the ESP32 using the Arduino core](https://github.com/fhessel/esp32_https_server), to make it compatible with the [default Webserver API](https://github.com/espressif/arduino-esp32/tree/master/libraries/WebServer).
 

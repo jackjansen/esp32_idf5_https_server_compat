@@ -4,11 +4,9 @@ on:
   push:
     branches:
       - master
-      - for-iotsa
   pull_request:
     branches:
       - master
-      - for-iotsa
 jobs:
   build-examples:
     strategy:
