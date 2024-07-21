@@ -67,7 +67,7 @@ cp -r "$CIDIR/templates/example-project"/* "$PROJECTDIR/"
 # Copy the source files
 cp -r "$EXAMPLEDIR/$EXAMPLENAME/." "$PROJECTDIR/src"
 # Create the library link
-ln -s "$REPODIR" "$PROJECTDIR/lib/esp32_https_server_compat"
+ln -s "$REPODIR" "$PROJECTDIR/lib/esp32_idf5_https_server_compat"
 # Convert .ino to main.cpp
 echo "#include <Arduino.h>" > "$MAINCPP"
 cat "$INOFILE" >> "$MAINCPP"
@@ -86,7 +86,7 @@ set +e
 pio --no-ansi run -d "$PROJECTDIR" -e "$BOARD" 2>&1 | \
   "$CIDIR/scripts/pio-to-gh-log.py" \
     "src/main.cpp:examples/$EXAMPLENAME/$EXAMPLENAME.ino:-1" \
-    "lib/esp32_https_server_compat/:src/" \
+    "lib/esp32_idf5_https_server_compat/:src/" \
     "$REPODIR/:"
 RC=${PIPESTATUS[0]}
 if [[ "$RC" != "0" ]]; then
