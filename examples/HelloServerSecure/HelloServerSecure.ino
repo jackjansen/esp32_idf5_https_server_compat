@@ -42,6 +42,17 @@
 #include "private_key.h"
 
 // TODO: Configure your WiFi here
+
+// SSID and PSK are best defined with -D options during compilation. But default definitions are provided
+// here for automatic CI/CD runs.
+
+#ifndef WIFI_SSID
+#define WIFI_SSID "unknown"
+#endif
+#ifndef WIFI_PSK
+#define WIFI_PSK "unknown"
+#endif
+
 const char* ssid = WIFI_SSID;
 const char* password = WIFI_PSK;
 
