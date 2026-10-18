@@ -27,6 +27,7 @@ struct {
   {HTTP_HEAD, "HEAD"},
   {HTTP_OPTIONS, "OPTIONS"},
 };
+static const size_t N_METHODNAMES = sizeof(METHODNAMES) / sizeof(METHODNAMES[0]);
 
 // We need to specify some content-type mapping, so the resources get delivered with the
 // right content type and are displayed correctly in the browser
@@ -126,8 +127,9 @@ void ESPWebServer::requestAuthentication(HTTPAuthMethod mode, const char* realm,
   send(401, "text/html", authFailMsg);
 }
 
+// Like the ESP32 WebServer and ESP8266WebServer: no method means any method.
 void ESPWebServer::on(const String &uri, THandlerFunction handler) {
-  on(uri, HTTP_GET, handler);
+  on(uri, HTTP_ANY, handler);
 }
 
 void ESPWebServer::on(const String &uri, HTTPMethod method, THandlerFunction fn) {
@@ -135,17 +137,15 @@ void ESPWebServer::on(const String &uri, HTTPMethod method, THandlerFunction fn)
 }
 
 void ESPWebServer::on(const String &uri, HTTPMethod method, THandlerFunction fn, THandlerFunction ufn) {
-  // TODO: Handle HTTP_ANY
   // TODO: convert {} in uri to * (so pathArg() will work)
-  const char *methodname = "???";
-  for (size_t n = 0; n < sizeof(METHODNAMES); n++) {
-    if (METHODNAMES[n].val == method) {
-      methodname = METHODNAMES[n].text;
-      break;
+  // The methods are bits: register a node for each one in method, so HTTP_ANY
+  // (or a combination) works.
+  for (size_t n = 0; n < N_METHODNAMES; n++) {
+    if (METHODNAMES[n].val & method) {
+      ESPWebServerNode *node = new ESPWebServerNode(this,std::string(uri.c_str()), std::string(METHODNAMES[n].text),fn, ufn);
+      _server->registerNode(node);
     }
   }
-  ESPWebServerNode *node = new ESPWebServerNode(this,std::string(uri.c_str()), std::string(methodname),fn, ufn);
-  _server->registerNode(node);
 }
 
 void ESPWebServer::serveStatic(const char* uri, fs::FS& fs, const char* path, const char* cache_header) {
@@ -177,7 +177,7 @@ String ESPWebServer::uri() {
 }
 
 HTTPMethod ESPWebServer::method() {
-  for(size_t n = 0; n < sizeof(METHODNAMES); n++) {
+  for(size_t n = 0; n < N_METHODNAMES; n++) {
     if (!_activeRequest->getMethod().compare(METHODNAMES[n].text)) {
       return (HTTPMethod)METHODNAMES[n].val;
     }
